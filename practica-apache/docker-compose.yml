@@ -1,0 +1,40 @@
+services: 
+  raul_website:
+    image: ubuntu/apache2
+    container_name: raul_apache
+    ports: 
+      - "8080:80"
+    volumes:
+      - ./raul_website/website:/var/www/html/
+      - ./raul_website/config:/etc/apache2/sites-available
+      - ./raul_website/scripts:/scripts
+    restart: always
+    entrypoint: /scripts/scripts.sh   
+
+  fernandez_website:
+      image: ubuntu/apache2
+      container_name: fernandez_apache
+      ports: 
+        - "81:80"
+      volumes: 
+      - ./fernandez_website/website:/var/www/html/
+      - ./fernandez_website/config:/etc/apache2/sites-available
+      - ./fernandez_website/scripts:/scripts
+      restart: always
+      entrypoint: /scripts/scripts.sh
+
+  seguro_website:
+        image: ubuntu/apache2
+        container_name: seguro_apache
+        ports: 
+          - "6969:80"
+          - "443:443"
+        volumes:
+        - ./seguro_website/website:/var/www/html
+        - ./seguro_website/config:/etc/apache2/sites-available
+        - ./seguro_website/scripts:/scripts
+        - ./seguro_website/htpasswd/.htpasswd:/etc/apache2/.htpasswd
+        - ./seguro_website/certs:/etc/apache2/certs
+        restart: always
+        entrypoint: /scripts/scripts.sh
+
