@@ -1,8 +1,6 @@
 # Apache-Practica
 # Tutorial Apache Web
 
-<span style="color:lime; font-size:17px"> **Buscad los archivos en el proyecto para usarlos de referencia en vuestras creaciones**
-
 ## Estructura de archivos
 
 Creamos la siguiente estructura de archivos
