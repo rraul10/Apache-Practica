@@ -33,124 +33,93 @@ Creamos la siguiente estructura de archivos
 
 ![image](https://github.com/user-attachments/assets/51fff8b4-c5e8-426a-83f9-e83801054cb6)
 
-- Creamos `script` con los comandos que realizará el contenedor automáticamente al iniciarse. En nuestro caso habilitaremos los sitios creados, habilitaremos el módulo ssl y reiniciaremos el servicio de `Apache` para aplicar los cambios.
+- Creamos `script`, que en mi caso tendre un script correspondiente a cada carpeta que he hecho. 
 
-<img src="./images/script.png" alt="archivos" style="padding-left:40px; padding-bottom:30px">
+![image](https://github.com/user-attachments/assets/1e65b515-3907-4ee2-abca-f48a02a75758)
+
+![image](https://github.com/user-attachments/assets/154ba005-0fac-488c-8ef0-10ea3a4c79a1)
+
+![image](https://github.com/user-attachments/assets/6aeefb78-d259-4f0e-8aa9-f1eba7e6d17e)
+
+- Creamos carpeta `htpasswd` en la carpeta donde tengo todo lo de raulseguro. Generaremos la contraseña en la pagina: https://bcrypt-generator.com/, pondremos nuestro nombre de usuario delante y la contraseña soltada por el bcrypt despues.
+
+![image](https://github.com/user-attachments/assets/793d1eb7-8f64-4b18-b4a6-0128ab39ff13)
 
 
-- Creamos carpeta `htpasswd` (el archivo se añadirá más tarde).
+- Creamos carpeta `certs`, que se encargara de almacenar los certificados.
 
-<img src="./images/carpetaHtpasswd.png" alt="archivos" style="padding-left:40px; padding-bottom:30px">
+![image](https://github.com/user-attachments/assets/f1a6214a-7163-40bb-8281-0774b23d95ad)
 
-- Creamos carpeta `certs` (los archivos se añadirán más tarde).
+- Creamos `docker-compose.yml` con la configuración de nuestros contenedores.
 
-<img src="./images/carpetaCerts.png" alt="archivos" style="padding-left:40px; padding-bottom:30px">
+![image](https://github.com/user-attachments/assets/c0176f54-9736-4745-8b49-54ca5142d612)
 
-- Creamos `docker-compose.yml` con la configuración de nuestro contenedor.
-
-<img src="./images/docker-compose.png" alt="archivos" style="padding-left:40px; padding-bottom:30px">
-
+![image](https://github.com/user-attachments/assets/15bcdb95-7b91-4986-846f-4f7ae24128ed)
 
 ## Generación de certificados
 
-Instalamos el programa **OpenSSL**.
+Instalamos el programa **OpenSSL** 
 
-Abrimos la terminal de OpenSSL y ejecutamos el siguiente comando (cambiar `seguro` por nombre de webhost):
+![image](https://github.com/user-attachments/assets/850e1bae-4b3a-497f-ac82-ab2b957699d6)
+
+Abrimos la terminal de OpenSSL y ejecutamos el siguiente comando:
 
 ```bash
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout seguro.key -out seguro.crt
 ```
 
-Nos pedirá una serie de datos. Respondemos a los datos que pide y en el **Common Name** ponemos el nombre del webhost incluida la extensión (`seguro.net`).
+![image](https://github.com/user-attachments/assets/2344ff75-3113-48bb-8239-15340cc39fb5)
 
-![foto](./images/certificados.png)
+![image](https://github.com/user-attachments/assets/14f99a93-3357-4bf1-b020-f8d996395392)
 
-Estos archivos se generarán en la ruta donde ejecutes el comando. Copia estos archivos a la carpeta `certs`.
+Copiamos estos archivos en la carpeta `certs`.
 
 ## Modificación del archivo hosts
 
-Modificamos el archivo `hosts` de nuestro PC para generar los DNS de nuestros webhosts.
+Modificamos el archivo hosts de nuestro PC para generar los DNS de nuestros webhosts.
 
-Vamos a la ruta: `C:\Windows\System32\drivers\etc`
+Vamos a la ruta systemclt32
+![image](https://github.com/user-attachments/assets/f89ef2f4-4bc0-43de-b328-6352e420c03f)
 
-Dentro de esta habrá un archivo `hosts`. Haremos una copia de este como backup.
+Entramos en drivers
+![image](https://github.com/user-attachments/assets/d370610c-7796-4a41-9aea-3a4222442f77)
 
-Modificamos el archivo `hosts` añadiendo las IPs y nombres de nuestros webhosts.
+Despues en etc
+![image](https://github.com/user-attachments/assets/544640f0-2124-4a72-b448-6cfc3f6fc3b5)
 
-![foto](./images/archivoHosts.png)
+Y ya por ultimo en host
+![image](https://github.com/user-attachments/assets/9158b9fa-9fd9-4f50-a556-14ae62dc9459)
+
+Donde deberemos añadir nuestras IPS
+![image](https://github.com/user-attachments/assets/2fe63f68-323c-49a3-ac0a-c91be2411e01)
+
 
 ## Lanzamiento del contenedor
 
-Lanzamos nuestro `docker-compose.yml` en la terminal con el comando:
+Una vez ya tengamos todo bien llamado en cada carpeta.
 
-```bash
-docker-compose –build -d
-```
+Ejecutamos el comando  `docker-compose up -d`
+![image](https://github.com/user-attachments/assets/3d4652cc-5835-4f8e-896b-8d0d194a8f5c)
 
-Si tenemos algún error podemos borrar lo generado con el comando:
+Iremos buscando cada pagina por el nombre que le hemos dado.
+![image](https://github.com/user-attachments/assets/c62ed845-c388-417b-89ba-b46aa75cf523)
 
-```bash
-docker-compose down
-```
+Esta seria mi segunda pagina.
+![image](https://github.com/user-attachments/assets/0cff0875-03ef-47f0-bbcd-4f5087b26c1b)
 
-Para acceder a la terminal del servidor generado usamos el comando:
+Y por ultimo la de seguro.net.
+![image](https://github.com/user-attachments/assets/442b5237-378f-4a2d-87b1-c3a9cb9cad4f)
 
-```bash
-docker exec -it apache_server /bin/bash
-```
+Y si añadimos /privado.
+![image](https://github.com/user-attachments/assets/f660207b-dd4e-4077-b995-357200eaa4d4)
 
-(También sirve `bash`).
+Nos saldra un nombre de usuario y contraseña que habremos puesto antes en htpasswd.
+![image](https://github.com/user-attachments/assets/2aee8e60-7f93-43b8-a711-3f81c1bd269e)
 
-![foto](./images/comandosDocker.png)
+Y una vez puesto el usuario y la contraseña saldra esto:
+![image](https://github.com/user-attachments/assets/ffd69f31-81fc-47d5-a41d-c2aaf75d6aed)
 
-## Generación del archivo .htpasswd
 
-Generamos archivo `.htpasswd` con el usuario y contraseña que deseemos.
 
-Una vez dentro de la terminal de Apache, iremos a la ruta `/etc/apache2`.
 
-Con el comando `ls -a` vemos los archivos ocultos y podemos ver que existe el archivo `.htpasswd`. En caso de no existir, lo generaremos nuevo, y si existe lo sobreescribiremos.
 
-Generamos el archivo con el siguiente comando:
-
-```bash
-htpasswd -c /etc/apache2/.htpasswd usuario
-```
-
-En `usuario` pondremos el nombre del usuario que queramos, y la contraseña la introduciremos cuando nos la pida.
-
-![foto](./images/htpasswd.png)
-
-El archivo se copiará directamente en la ruta de nuestro proyecto al haber creado el volumen en el `docker-compose.yml`.
-
-## Pruebas en el navegador
-
-Ahora abrimos el navegador y buscamos las siguientes rutas:
-
-- `http://jaime.com:8080`
-
-<img src="./images/jaime.com.png" alt="archivos" style="padding-left:40px; padding-bottom:10px">
-
-<img src="./images/jaime.com-error404.png" alt="archivos" style="padding-left:40px; padding-bottom:30px">
-
-- `http://leon.com:8080`
-
-<img src="./images/leon.com.png" alt="archivos" style="padding-left:40px; padding-bottom:30px">
-
-- `https://seguro.net:8443`
-
-<img src="./images/seguro.net.png" alt="archivos" style="padding-left:40px; padding-bottom:30px">
-
-- `https://seguro.net/privado` ➡️ **Aquí introducimos los credenciales generados con htpasswd**
-
-<img src="./images/loginPrivado.png" alt="archivos" style="padding-left:40px; padding-bottom:10px">
-
-<img src="./images/seguro.net-privado.png" alt="archivos" style="padding-left:40px; padding-bottom:10px">
-
-<img src="./images/seguro.net-error401.png" alt="archivos" style="padding-left:40px; padding-bottom:80px">
-
-# Autor
-
-Realizado por [Jaime León Mulero](https://github.com/jaimeleon10)
-
-<img src="./images/fondoJaime.png" alt="archivos">
